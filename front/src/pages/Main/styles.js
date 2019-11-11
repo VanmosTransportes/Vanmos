@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   flex: 1;
-  max-height: 400px;
+  max-height: 450px;
   z-index: 5;
 `;
 
@@ -19,10 +19,10 @@ export const Card = styled(Animated.View)`
   border-radius: 4px;
   height: 100%;
   position: absolute;
-  left: 0;
+  left: 8;
   right: 0;
   top: 0px;
-  width: 100%;
+  width: 95%;
 `;
 
 export const CardHeader = styled.View`

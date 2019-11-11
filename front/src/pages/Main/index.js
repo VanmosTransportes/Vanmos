@@ -68,7 +68,8 @@ export default function Main(){
       <Header />
 
       <Content>
-        <Menu translateY={translateY} />
+        {/* <Menu translateY={translateY} /> */}
+        <Tabs translateY={translateY} />
 
         <PanGestureHandler
           onGestureEvent={animatedEvent}
@@ -77,8 +78,8 @@ export default function Main(){
           <Card style={{
             transform: [{
               translateY: translateY.interpolate({
-                inputRange: [-350, 0, 380],
-                outputRange: [-50, 0, 380],
+                inputRange: [-350, 0, 350],
+                outputRange: [-50, 0, 350],
                 extrapolate: 'clamp',
               }),
             }]
@@ -90,7 +91,6 @@ export default function Main(){
         </PanGestureHandler>
 
       </Content>      
-      <Tabs translateY={translateY} />
     </Container>
   );
 }
