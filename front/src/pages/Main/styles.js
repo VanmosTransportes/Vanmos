@@ -23,6 +23,7 @@ export const Card = styled(Animated.View)`
   right: 0;
   top: 0px;
   width: 95%;
+  overflow: hidden;
 `;
 
 export const CardHeader = styled.View`

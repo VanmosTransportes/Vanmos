@@ -5,6 +5,7 @@ import { PanGestureHandler, State } from'react-native-gesture-handler'
 
 import Header from '~/components/Header'
 import Tabs from '~/components/Tabs'
+import PassangerMap from '~/components/Map/Map';
 
 import {
         Container,
@@ -85,7 +86,7 @@ export default function Main(){
             }]
           }}>
             <CardContent>
-              <Description>Mapa</Description>
+              <PassangerMap />
             </CardContent>
           </Card>
         </PanGestureHandler>
