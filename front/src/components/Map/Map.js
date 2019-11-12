@@ -57,34 +57,30 @@ class Example extends Component {
     this.setState({ marginBottom: 0, borderRadius: 10000 })
   }
 
-  _onUserLocationChange = () => {
-    
+  _onUserLocationChange = (coordinate) => {
+    let { coordinates } = this.state
+    coordinates[0] = { latitude: coordinate.latitude, longitude: coordinate.longitude }
+    console.log(coordinates)
+    this.setState(coordinates)
   }
 
   getDistance = async (e) =>
   {
     let id = e.nativeEvent['id']
-    // get location of base
     const BaseLocation = `${this.state.coordinates[0].latitude},${this.state.coordinates[0].longitude}`;
-    // get locations of targets
     const TargetLocation = `${e.nativeEvent.coordinate['latitude']},${e.nativeEvent.coordinate['longitude']}`
 
-    // prepare final API call
     let ApiURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     let params = `origins=${BaseLocation}&destinations=${TargetLocation}&key=${GOOGLE_MAPS_APIKEY}&mode=driving`;  
     let finalApiURL = `${ApiURL}${encodeURI(params)}`;
     
     try {
       let response = await fetch(finalApiURL);
-      let responseJson = await response.json();
-      
+      let responseJson = await response.json();  
       let selected = {...this.state.coordinates2[id], 'title': `Distance: ${responseJson['rows'][0]['elements'][0]['distance']['text']}`, 'description': `Duration: ${responseJson['rows'][0]['elements'][0]['duration']['text']}`}
-
       let newCoordinate2 = [...this.state.coordinates2]
       newCoordinate2[id] = selected
-
       this.setState({coordinates2: newCoordinate2})
-
     } catch(error) {
       console.error(error);
     } 
@@ -108,9 +104,7 @@ class Example extends Component {
         followsUserLocation={true}
         rotateEnabled={false}
         onUserLocationChange={e => {
-          console.log(e.nativeEvent.coordinate.latitude)
-          console.log(e.nativeEvent.coordinate.longitude)
-          console.log({...StyleSheet.absoluteFill})
+          this._onUserLocationChange(e.nativeEvent.coordinate)
         }}
         showsCompass={true}
         showsMyLocationButton={true}
