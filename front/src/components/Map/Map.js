@@ -47,7 +47,6 @@ class Example extends Component {
         },
       ],
       marginBottom: 1,
-      borderRadius: 0,
     };
 
     this.mapView = null;
@@ -60,7 +59,6 @@ class Example extends Component {
   _onUserLocationChange = (coordinate) => {
     let { coordinates } = this.state
     coordinates[0] = { latitude: coordinate.latitude, longitude: coordinate.longitude }
-    console.log(coordinates)
     this.setState(coordinates)
   }
 
@@ -87,7 +85,7 @@ class Example extends Component {
   }
 
   render() {
-    const { marginBottom, borderRadius } = this.state
+    const { marginBottom } = this.state
     
     return (
       <MapView
