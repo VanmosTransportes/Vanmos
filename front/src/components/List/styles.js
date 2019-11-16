@@ -5,22 +5,24 @@ export const Container = styled.View`
   padding: 0px 0 20px;
 `;
 
-export const Top = styled.View`
+export const ListItem = styled.View`
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+    
 `;
 
 export const Photo = styled.Image`
-  width: 80px;
-  height: 80px;
+  width: 30px;
+  height: 30px;
   border-radius: 40px;
 `;
 
-export const Title = styled.Text`
-  font-size: 20px;
+export const Text = styled.Text`
+  font-size: 15px;
   color: #000000;
   font-weight: bold;
-  margin-left: 20px;
+  margin: 6px 10px;
+  justify-content: center;
 `;
