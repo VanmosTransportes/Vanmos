@@ -6,7 +6,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import { Info } from './styles';
 
 
-import json from '../../services/routes'
+import { route } from '../../services/db'
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -31,7 +31,7 @@ class Example extends Component {
   }
 
   componentDidMount() {
-    this.setState({coordinates: json})
+    this.setState({coordinates: route})
   }
 
   _onMapReady = () => {

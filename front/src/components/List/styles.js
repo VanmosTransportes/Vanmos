@@ -7,10 +7,11 @@ export const Container = styled.View`
 
 export const ListItem = styled.View`
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between
   margin-bottom: 3px;
   border-bottom-width: 1px;
   border-bottom-color: black;
-    
 `;
 
 export const Photo = styled.Image`

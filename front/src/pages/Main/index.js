@@ -11,17 +11,9 @@ import {
         Container,
         Content,
         Card,
-        CardHeader,
         CardContent,
-        CardFooter,
-        Title,
-        Description,
-        Annotation
         }
 from './styles';
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import Menu from '~/components/Menu';
-
 export default function Main(){
 
   let offset = 0

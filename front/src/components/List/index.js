@@ -1,16 +1,17 @@
 import React from 'react'
 import { ListItem, Photo, Text } from './styles'
-
-import json from '../../services/routes'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 export default function List(props){
+    const { list, icon } = props
     return (
         <>
             {
-                json.slice(1).map((item, i) =>
+                list.map((item, i) =>
                     <ListItem key={`listItem-${i}`}>
-                        <Photo source={props.photo} />
-                        <Text>{item.title}</Text>
+                        {icon && <Photo source={props.photo} />}
+                        <Text>{item.name}</Text>
+                        <Icon name="keyboard-arrow-right" size={20} color="#000" />
                     </ListItem>
                 )
             }
