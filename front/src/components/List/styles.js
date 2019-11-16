@@ -22,7 +22,6 @@ export const Photo = styled.Image`
 export const Text = styled.Text`
   font-size: 15px;
   color: #000000;
-  font-weight: bold;
   margin: 6px 10px;
   justify-content: center;
 `;

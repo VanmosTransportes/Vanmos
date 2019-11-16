@@ -1,12 +1,20 @@
 import React from 'react'
 import { ListItem, Photo, Text } from './styles'
 
+import json from '../../services/routes'
+
 export default function List(props){
     return (
-        <ListItem>
-            <Photo source={props.photo} />
-            <Text>{props.name}</Text>
-        </ListItem>
+        <>
+            {
+                json.slice(1).map((item, i) =>
+                    <ListItem key={`listItem-${i}`}>
+                        <Photo source={props.photo} />
+                        <Text>{item.title}</Text>
+                    </ListItem>
+                )
+            }
+        </>
     )
 }
 

@@ -23,4 +23,6 @@ export const TabItem = styled.View`
 export const TabText = styled.Text`
     font-size: 13px;
     color: #000;
+    margin-left: 5px;
+    font-weight: bold;
 `;

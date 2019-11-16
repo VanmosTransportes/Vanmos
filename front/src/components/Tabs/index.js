@@ -16,11 +16,7 @@ export default function Tabs(){
                          <Icon name="list" size={24}  color="#000" />
                          <TabText>Rota atual</TabText>
                     </View>
-                    {
-                         json.slice(1).map((item) =>
-                              <List name={item.title} />
-                         )
-                    }
+                    <List />
                </TabItem>
                <TabItem>
                     <Icon name="chat-bubble-outline" size={24} color="#000" />
