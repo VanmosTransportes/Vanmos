@@ -71,7 +71,7 @@ class Example extends Component {
   _onUserLocationChange = (coordinate) => {
     let { userLocation } = this.state
     userLocation = { latitude: coordinate.latitude, longitude: coordinate.longitude }
-    this.setState({ userLocation })
+    this.getRouteDistanceDuration(userLocation, this.state.autoLocation, (durDis) => { this.setState({ userLocation, durDis }) }) 
   }
 
   render() {
@@ -92,7 +92,7 @@ class Example extends Component {
           followsUserLocation={true}
           rotateEnabled={false}
           onUserLocationChange={e => {
-            // this._onUserLocationChange(e.nativeEvent.coordinate)
+            this._onUserLocationChange(e.nativeEvent.coordinate)
           }}
           showsCompass={true}
           showsMyLocationButton={true}
