@@ -1,8 +1,6 @@
 import React from 'react'
 import { Container, Top, Photo, Title } from './styles';
-
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
 
 export default function Header(props){
     return(

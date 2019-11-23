@@ -5,7 +5,8 @@ import { PanGestureHandler, State } from'react-native-gesture-handler'
 
 import Header from '~/components/Header'
 import Tabs from '~/components/Tabs'
-import PassangerMap from '~/components/Map/Map';
+import Map from '~/components/Map/Map';
+// import Map from '~/components/Map/Passenger';
 
 import {
         Container,
@@ -14,6 +15,7 @@ import {
         CardContent,
         }
 from './styles';
+
 export default function Main(){
 
   let offset = 0
@@ -61,9 +63,7 @@ export default function Main(){
       <Header />
 
       <Content>
-        {/* <Menu translateY={translateY} /> */}
         <Tabs translateY={translateY} />
-
         <PanGestureHandler
           onGestureEvent={animatedEvent}
           onHandlerStateChange={onHandlerStateChange}
@@ -78,7 +78,7 @@ export default function Main(){
             }]
           }}>
             <CardContent>
-              <PassangerMap />
+              <Map />
             </CardContent>
           </Card>
         </PanGestureHandler>

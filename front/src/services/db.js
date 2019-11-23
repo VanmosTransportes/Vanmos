@@ -4,25 +4,25 @@ const route = [
       longitude: -49.3613,
     },
     {
-      latitude: -25.504693,
-      longitude: -49.3495899,
-      name: 'Alexandre H. Caos',
+      latitude: -25.6083322,
+      longitude: -49.429842,
+      title: 'Alexandre H. Caos',
       description: 'Casa do Alexandre'
     },
     {
-      latitude: -25.6083322,
-      longitude: -49.429842,
-      name: 'Carlos Eduardo',
+      latitude: -25.584693,
+      longitude: -49.3995899,
+      title: 'Carlos Eduardo',
       description: 'Casa do Cae'
     },
   ]
 
 const routeList = [
   {
-    name: 'Facear'
+    title: 'Facear'
   },
   {
-    name: 'Mirum'
+    title: 'Mirum'
   },
 ]
 

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Circle } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-
-import { Info } from './styles';
-
 
 import { route } from '../../services/db'
 
@@ -25,6 +22,7 @@ class Example extends Component {
     this.state = {
       coordinates: [],
       marginBottom: 1,
+      load: 0,
     };
 
     this.mapView = null;
@@ -35,18 +33,18 @@ class Example extends Component {
   }
 
   _onMapReady = () => {
-    this.setState({ marginBottom: 0 })
+    this.setState({ marginBottom: 0, load: 1 })
   }
 
   _onUserLocationChange = (coordinate) => {
     let { coordinates } = this.state
     coordinates[0] = { latitude: coordinate.latitude, longitude: coordinate.longitude }
-    this.setState(coordinates)
+    this.setState({ coordinates })
   }
 
   getDistance = async (e) =>
   {
-    let id = e.nativeEvent['id']
+    let id = parseInt(e.nativeEvent['id'])
     const BaseLocation = `${this.state.coordinates[0].latitude},${this.state.coordinates[0].longitude}`;
     const TargetLocation = `${e.nativeEvent.coordinate['latitude']},${e.nativeEvent.coordinate['longitude']}`
 
@@ -57,18 +55,17 @@ class Example extends Component {
     try {
       let response = await fetch(finalApiURL);
       let responseJson = await response.json();  
-      let selected = {...this.state.coordinates2[id], 'title': `Distance: ${responseJson['rows'][0]['elements'][0]['distance']['text']}`, 'description': `Duration: ${responseJson['rows'][0]['elements'][0]['duration']['text']}`}
-      let newCoordinate2 = [...this.state.coordinates2]
-      newCoordinate2[id] = selected
-      this.setState({coordinates2: newCoordinate2})
+      let selected = {...this.state.coordinates[id+1], 'title': `Distance: ${responseJson['rows'][0]['elements'][0]['distance']['text']}`, 'description': `Duration: ${responseJson['rows'][0]['elements'][0]['duration']['text']}`}
+      let newCoordinate = [...this.state.coordinates]
+      newCoordinate[id+1] = selected
+      this.setState({coordinates: newCoordinate})
     } catch(error) {
-      console.error(error);
-    } 
+      console.error('getDistance', error);
+    }
   }
 
   render() {
     const { marginBottom } = this.state
-    
     return (
       <MapView
         initialRegion={{
@@ -79,24 +76,23 @@ class Example extends Component {
         }}
         style={{ ...StyleSheet.absoluteFillObject , marginBottom: marginBottom}}
         ref={c => this.mapView = c}
-        onMapReady={this._onMapReady}        
+        onMapReady={this._onMapReady}
         showsUserLocation={true}
         followsUserLocation={true}
         rotateEnabled={false}
         onUserLocationChange={e => {
-          // this._onUserLocationChange(e.nativeEvent.coordinate)
+          this._onUserLocationChange(e.nativeEvent.coordinate)
         }}
         showsCompass={true}
         showsMyLocationButton={true}
       >
-
-        {(this.state.coordinates.length >= 2) && (
+        {(this.state.coordinates.length >= 2 && this.state.load === 1) && (
           <>
             <MapViewDirections
               origin={this.state.coordinates[0]}
-              // waypoints={ (this.state.coordinates.length > 2) ? this.state.coordinates.slice(1, -1): null}
-              // destination={this.state.coordinates[this.state.coordinates.length-1]}
-              // apikey={GOOGLE_MAPS_APIKEY}
+              waypoints={ (this.state.coordinates.length > 2) ? this.state.coordinates.slice(1, -1): null}
+              destination={this.state.coordinates[this.state.coordinates.length-1]}
+              apikey={GOOGLE_MAPS_APIKEY}
               precision="high"
               strokeWidth={3}
               strokeColor="hotpink"
@@ -121,19 +117,22 @@ class Example extends Component {
             />
 
             {this.state.coordinates.slice(1).map((coordinate, index) =>
-              <Marker key={`coordinate_${index}`}
-                identifier={`${index}`}
-                coordinate={coordinate} 
-                title={coordinate.title} 
-                description={coordinate.description}
-                onPress={(e) => this.getDistance(e)}
-              />
-            )}
+              <React.Fragment key={`marker-${index}`}>
+                <MapView.Marker 
+                  identifier={`${index}`}
+                  coordinate={coordinate} 
+                  title={coordinate.title}
+                  description={coordinate.description}
+                  onPress={(e) => this.getDistance(e)}
+                />
 
-            <Info>Proximo passageiro</Info>
-          
-        </>
+                <Circle center={coordinate} radius={300} fillColor={"rgba(255,0,0,0.3)"} />
+              </React.Fragment>
+            )}
+            
+          </>
         )}
+        
 
       </MapView>
     );
