@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
+
 import MapView, { Circle } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
+import Geolocation from '@react-native-community/geolocation';
+
+import { Infos, DurationText, DistanceText } from './styles'
+
 
 import { route } from '../../services/db'
+
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -21,6 +27,7 @@ class Example extends Component {
 
     this.state = {
       coordinates: [],
+      durDis: { duration: "0 min", distance: "0 km" },
       marginBottom: 1,
       load: 0,
     };
@@ -29,17 +36,39 @@ class Example extends Component {
   }
 
   componentDidMount() {
-    this.setState({coordinates: route})
+    coordinates = route
+    Geolocation.getCurrentPosition(
+      (position) => {
+        coordinates[0] = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+        this.getRouteDistanceDuration(coordinates[0], coordinates[coordinates.length - 1], (durDis) => { this.setState({ coordinates, durDis }) }) 
+      },
+    );
+  }
+
+  getRouteDistanceDuration = async (start, end, cb) => {
+    let baseLocation =  `${start.latitude},${start.longitude}`
+    let targetLocation = `${end.latitude},${end.longitude}`
+
+    let ApiURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
+    let params = `origins=${baseLocation}&destinations=${targetLocation}&key=${GOOGLE_MAPS_APIKEY}&mode=driving`;  
+    let finalApiURL = `${ApiURL}${encodeURI(params)}`;
+    try {
+      let response = await fetch(finalApiURL);
+      let responseJson = await response.json();
+      cb({ duration: responseJson.rows[0].elements[0].duration.text, distance: responseJson.rows[0].elements[0].distance.text })
+    } catch(error) {
+      console.error('getRouteDistanceDuration -->>', error);
+    }
   }
 
   _onMapReady = () => {
     this.setState({ marginBottom: 0, load: 1 })
   }
 
-  _onUserLocationChange = (coordinate) => {
+  _onUserLocationChange = (userCoordinate) => {
     let { coordinates } = this.state
-    coordinates[0] = { latitude: coordinate.latitude, longitude: coordinate.longitude }
-    this.setState({ coordinates })
+    coordinates[0] = { latitude: userCoordinate.latitude, longitude: userCoordinate.longitude }
+    this.getRouteDistanceDuration(coordinates[0], coordinates[coordinates.length - 1], (durDis) => { this.setState({ coordinates, durDis }) }) 
   }
 
   getDistance = async (e) =>
@@ -64,77 +93,83 @@ class Example extends Component {
     }
   }
 
+  
   render() {
     const { marginBottom } = this.state
     return (
-      <MapView
-        initialRegion={{
-          latitude: LATITUDE,
-          longitude: LONGITUDE,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
-        }}
-        style={{ ...StyleSheet.absoluteFillObject , marginBottom: marginBottom}}
-        ref={c => this.mapView = c}
-        onMapReady={this._onMapReady}
-        showsUserLocation={true}
-        followsUserLocation={true}
-        rotateEnabled={false}
-        onUserLocationChange={e => {
-          this._onUserLocationChange(e.nativeEvent.coordinate)
-        }}
-        showsCompass={true}
-        showsMyLocationButton={true}
-      >
-        {(this.state.coordinates.length >= 2 && this.state.load === 1) && (
-          <>
-            <MapViewDirections
-              origin={this.state.coordinates[0]}
-              waypoints={ (this.state.coordinates.length > 2) ? this.state.coordinates.slice(1, -1): null}
-              destination={this.state.coordinates[this.state.coordinates.length-1]}
-              apikey={GOOGLE_MAPS_APIKEY}
-              precision="high"
-              strokeWidth={3}
-              strokeColor="hotpink"
-              optimizeWaypoints={false}
-              onStart={(params) => {
-                // console.log(params)
-                // console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
-              }}
-              onReady={result => {
-                this.mapView.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: (width / 7),
-                    bottom: (height / 7),
-                    left: (width / 7),
-                    top: (height / 7),
-                  }
-                });
-              }}
-              onError={(errorMessage) => {
-                console.log(errorMessage);
-              }}
-            />
+      <>
+        <MapView
+          initialRegion={{
+            latitude: LATITUDE,
+            longitude: LONGITUDE,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }}
+          style={{ ...StyleSheet.absoluteFillObject , marginBottom: marginBottom}}
+          ref={c => this.mapView = c}
+          onMapReady={this._onMapReady}
+          showsUserLocation={true}
+          followsUserLocation={true}
+          rotateEnabled={false}
+          onUserLocationChange={e => {
+            this._onUserLocationChange(e.nativeEvent.coordinate)
+          }}
+          showsCompass={true}
+          showsMyLocationButton={true}
+        >
+          {(this.state.coordinates.length >= 2 && this.state.load === 1) && (
+            <>
+              {/* <MapViewDirections
+                origin={this.state.coordinates[0]}
+                waypoints={ (this.state.coordinates.length > 2) ? this.state.coordinates.slice(1, -1): null}
+                destination={this.state.coordinates[this.state.coordinates.length-1]}
+                apikey={GOOGLE_MAPS_APIKEY}
+                precision="high"
+                strokeWidth={3}
+                strokeColor="hotpink"
+                optimizeWaypoints={false}
+                onStart={(params) => {
+                  console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
+                }}
+                onReady={result => {
+                  this.mapView.fitToCoordinates(result.coordinates, {
+                    edgePadding: {
+                      right: (width / 7),
+                      bottom: (height / 7),
+                      left: (width / 7),
+                      top: (height / 7),
+                    }
+                  });
+                }}
+                onError={(errorMessage) => {
+                  console.log(errorMessage);
+                }}
+              /> */}
 
-            {this.state.coordinates.slice(1).map((coordinate, index) =>
-              <React.Fragment key={`marker-${index}`}>
-                <MapView.Marker 
-                  identifier={`${index}`}
-                  coordinate={coordinate} 
-                  title={coordinate.title}
-                  description={coordinate.description}
-                  onPress={(e) => this.getDistance(e)}
-                />
+              {/* {this.state.coordinates.slice(1).map((coordinate, index) =>
+                <React.Fragment key={`marker-${index}`}>
+                  <MapView.Marker 
+                    identifier={`${index}`}
+                    coordinate={coordinate} 
+                    title={coordinate.title}
+                    description={coordinate.description}
+                    // onPress={(e) => this.getDistance(e)}
+                  />
 
-                <Circle center={coordinate} radius={300} fillColor={"rgba(255,0,0,0.3)"} />
-              </React.Fragment>
-            )}
-            
-          </>
-        )}
-        
+                  <Circle center={coordinate} radius={300} fillColor={"rgba(255,0,0,0.3)"} />
+                </React.Fragment>
+              )} */}
+              
+            </>
+          )}
 
-      </MapView>
+        </MapView>
+        <Infos>
+          <DistanceText>Distancia: {this.state.durDis.distance}</DistanceText>
+          <DurationText>Chegada em: {this.state.durDis.duration}</DurationText>
+        </Infos>
+      </>
+
     );
   }
 }
