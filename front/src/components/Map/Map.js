@@ -119,7 +119,7 @@ class Example extends Component {
         >
           {(this.state.coordinates.length >= 2 && this.state.load === 1) && (
             <>
-              {/* <MapViewDirections
+              <MapViewDirections
                 origin={this.state.coordinates[0]}
                 waypoints={ (this.state.coordinates.length > 2) ? this.state.coordinates.slice(1, -1): null}
                 destination={this.state.coordinates[this.state.coordinates.length-1]}
@@ -144,9 +144,9 @@ class Example extends Component {
                 onError={(errorMessage) => {
                   console.log(errorMessage);
                 }}
-              /> */}
+              />
 
-              {/* {this.state.coordinates.slice(1).map((coordinate, index) =>
+              {this.state.coordinates.slice(1).map((coordinate, index) =>
                 <React.Fragment key={`marker-${index}`}>
                   <MapView.Marker 
                     identifier={`${index}`}
@@ -158,7 +158,7 @@ class Example extends Component {
 
                   <Circle center={coordinate} radius={300} fillColor={"rgba(255,0,0,0.3)"} />
                 </React.Fragment>
-              )} */}
+              )}
               
             </>
           )}
