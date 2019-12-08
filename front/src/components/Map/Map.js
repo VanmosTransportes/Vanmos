@@ -105,21 +105,21 @@ class Example extends Component {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
-          style={{ ...StyleSheet.absoluteFillObject , marginBottom: marginBottom}}
+          style={{ ...StyleSheet.absoluteFillObject, marginBottom: marginBottom}}
           ref={c => this.mapView = c}
           onMapReady={this._onMapReady}
           showsUserLocation={true}
           followsUserLocation={true}
           rotateEnabled={false}
           onUserLocationChange={e => {
-            this._onUserLocationChange(e.nativeEvent.coordinate)
+            // this._onUserLocationChange(e.nativeEvent.coordinate)
           }}
           showsCompass={true}
           showsMyLocationButton={true}
         >
           {(this.state.coordinates.length >= 2 && this.state.load === 1) && (
             <>
-              <MapViewDirections
+              {/* <MapViewDirections
                 origin={this.state.coordinates[0]}
                 waypoints={ (this.state.coordinates.length > 2) ? this.state.coordinates.slice(1, -1): null}
                 destination={this.state.coordinates[this.state.coordinates.length-1]}
@@ -128,6 +128,7 @@ class Example extends Component {
                 strokeWidth={3}
                 strokeColor="hotpink"
                 optimizeWaypoints={false}
+                resetOnChange={false}
                 onStart={(params) => {
                   console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
                 }}
@@ -144,7 +145,7 @@ class Example extends Component {
                 onError={(errorMessage) => {
                   console.log(errorMessage);
                 }}
-              />
+              /> */}
 
               {this.state.coordinates.slice(1).map((coordinate, index) =>
                 <React.Fragment key={`marker-${index}`}>

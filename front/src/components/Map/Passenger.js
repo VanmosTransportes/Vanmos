@@ -36,20 +36,17 @@ class Example extends Component {
   }
 
   componentDidMount() {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        let userLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude }
-        this.getRouteDistanceDuration(userLocation, this.state.autoLocation, (durDis) => { this.setState({ userLocation, durDis }) }) 
-      },
-    );
+    // Geolocation.getCurrentPosition(
+    //   (position) => {
+    //     let userLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+    //     this.getRouteDistanceDuration(userLocation, this.state.autoLocation, (durDis) => { this.setState({ userLocation, durDis }) }) 
+    //   },
+    // );
   }
 
   getRouteDistanceDuration = async (start, end, cb) => {
     let baseLocation =  `${start.latitude},${start.longitude}`
     let targetLocation = `${end.latitude},${end.longitude}`
-
-    console.log(baseLocation)
-    console.log(targetLocation)
 
     let ApiURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     let params = `origins=${baseLocation}&destinations=${targetLocation}&key=${GOOGLE_MAPS_APIKEY}&mode=driving`;  
@@ -92,16 +89,17 @@ class Example extends Component {
           followsUserLocation={true}
           rotateEnabled={false}
           onUserLocationChange={e => {
-            this._onUserLocationChange(e.nativeEvent.coordinate)
+            // this._onUserLocationChange(e.nativeEvent.coordinate)
           }}
           showsCompass={true}
           showsMyLocationButton={true}
         >
           <Marker
             coordinate={this.state.autoLocation}
+            icon={require('../../assets/VanMarker.png')}
           />
           
-          {(this.state.userLocation.latitude) && (
+          {/* {(this.state.userLocation.latitude) && (
             <MapViewDirections
               origin={this.state.autoLocation}
               destination={this.state.userLocation}
@@ -110,6 +108,7 @@ class Example extends Component {
               strokeWidth={3}
               strokeColor="hotpink"
               optimizeWaypoints={false}
+              resetOnChange={false}
               onReady={result => {
                 this.mapView.fitToCoordinates(result.coordinates, {
                   edgePadding: {
@@ -124,10 +123,9 @@ class Example extends Component {
                 console.log(errorMessage);
               }}
             />
-          )}
+          )} */}
         </MapView>
         <Infos>
-          {console.log(this.state.durDis.distance)}
           <DistanceText>Distancia: {this.state.durDis.distance}</DistanceText>
           <DurationText>Chegada em: {this.state.durDis.duration}</DurationText>
         </Infos>
