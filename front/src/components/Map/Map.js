@@ -37,12 +37,11 @@ class Example extends Component {
 
   componentDidMount() {
     coordinates = route
-    Geolocation.getCurrentPosition(
-      (position) => {
-        coordinates[0] = { latitude: position.coords.latitude, longitude: position.coords.longitude }
-        this.getRouteDistanceDuration(coordinates[0], coordinates[coordinates.length - 1], (durDis) => { this.setState({ coordinates, durDis }) }) 
-      },
-    );
+    getPosition = (position) => {
+      coordinates[0] = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+      this.getRouteDistanceDuration(coordinates[0], coordinates[coordinates.length - 1], (durDis) => { this.setState({ coordinates, durDis }) }) 
+    }
+    Geolocation.getCurrentPosition(getPosition, (err) => console.log(err), { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }) 
   }
 
   getRouteDistanceDuration = async (start, end, cb) => {

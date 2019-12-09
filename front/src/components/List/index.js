@@ -17,32 +17,13 @@ import {
 
 import SortableList from 'react-native-sortable-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-    
-const data = [
-  {
-    image: 'https://placekitten.com/200/240',
-    text: 'Chloe',
-  },
-  {
-    image: 'https://placekitten.com/200/201',
-    text: 'Jasper',
-  },
-  {
-    image: 'https://placekitten.com/200/202',
-    text: 'Pepper',
-  },
-  {
-    image: 'https://placekitten.com/200/203',
-    text: 'Oscar',
-  },
-];
 
 export default class Basic extends Component {
   render() {
     return (
       <List>
         <SortableList
-          data={data}
+          data={this.props.list}
           renderRow={this._renderRow}
           onReleaseRow={(key, order) => console.log(order)}
           />
