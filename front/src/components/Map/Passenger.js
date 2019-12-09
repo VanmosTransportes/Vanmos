@@ -36,13 +36,13 @@ class Example extends Component {
   }
 
   componentDidMount() {
-    // Geolocation.getCurrentPosition(
-    //   (position) => {
-    //     let userLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude }
-    //     this.getRouteDistanceDuration(userLocation, this.state.autoLocation, (durDis) => { this.setState({ userLocation, durDis }) }) 
-    //   },
-    // );
+    getPosition = (position) => {
+      let userLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude }
+      this.getRouteDistanceDuration(userLocation, this.state.autoLocation, (durDis) => { this.setState({ userLocation, durDis }) }) 
+    }
+    Geolocation.getCurrentPosition(getPosition, (err) => console.log(err), { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 })
   }
+
 
   getRouteDistanceDuration = async (start, end, cb) => {
     let baseLocation =  `${start.latitude},${start.longitude}`
@@ -57,6 +57,7 @@ class Example extends Component {
       console.log(responseJson)
       cb({ duration: responseJson.rows[0].elements[0].duration.text, distance: responseJson.rows[0].elements[0].distance.text })
     } catch(error) {
+      cb({ duration: "0 Min", distance: "0 KM" })
       console.error('getRouteDistanceDuration -->>', error);
     }
   }
@@ -89,7 +90,7 @@ class Example extends Component {
           followsUserLocation={true}
           rotateEnabled={false}
           onUserLocationChange={e => {
-            // this._onUserLocationChange(e.nativeEvent.coordinate)
+            this._onUserLocationChange(e.nativeEvent.coordinate)
           }}
           showsCompass={true}
           showsMyLocationButton={true}
@@ -99,7 +100,7 @@ class Example extends Component {
             icon={require('../../assets/VanMarker.png')}
           />
           
-          {/* {(this.state.userLocation.latitude) && (
+          {(this.state.userLocation.latitude) && (
             <MapViewDirections
               origin={this.state.autoLocation}
               destination={this.state.userLocation}
@@ -123,7 +124,7 @@ class Example extends Component {
                 console.log(errorMessage);
               }}
             />
-          )} */}
+          )}
         </MapView>
         <Infos>
           <DistanceText>Distancia: {this.state.durDis.distance}</DistanceText>

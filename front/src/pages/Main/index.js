@@ -79,7 +79,7 @@ export default function Main(){
             }]
           }}>
             <CardContent>
-              {/* <Map /> */}
+              <Map />
             </CardContent>
           </Card>
         </PanGestureHandler>
