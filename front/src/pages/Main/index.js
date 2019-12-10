@@ -2,23 +2,25 @@ import React from 'react';
 
 import { Animated } from 'react-native'
 import { PanGestureHandler, State } from'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Header from '~/components/Header'
 import Tabs from '~/components/Tabs'
-// import Map from '~/components/Map/Map3';
 // import Map from '~/components/Map/Map';
 import Map from '~/components/Map/Passenger';
 
+
 import {
-        Container,
-        Content,
-        Card,
-        CardContent,
-        }
+  Container,
+  Content,
+  Card,
+  CardContent,
+  }
 from './styles';
 
-export default function Main(){
-
+export default function Main(props){
+  const {navigate} = props.navigation;
+  
   let offset = 0
   const translateY = new Animated.Value(0)
   const animatedEvent = Animated.event(
@@ -61,6 +63,7 @@ export default function Main(){
 
   return(
     <Container>
+      <Icon name='keyboard-arrow-left' size={25} onPress={() => navigate('Login')} />
       <Header />
 
       <Content>
