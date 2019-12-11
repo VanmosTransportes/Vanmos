@@ -17,7 +17,7 @@ import styles from './styles'
 export default class Register extends Component {
 
   render() {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation.getParam('navigation')
     return (
       <Container style={ styles.Container }>
         <Content style={ styles.Content }>

@@ -36,6 +36,7 @@ export default class Login extends Component {
   }
 
   render() {
+    const {navigate} = this.state.navigation;
     return (
       <Container style={ styles.Container }>
         <Content style={ styles.Content }>
@@ -55,7 +56,7 @@ export default class Login extends Component {
           <Button block onPress={() => this.enter()} style={ styles.Login }>
             <Text>Entrar</Text>
           </Button>
-          <Text onPress={() => navigate('Register')} style={ styles.RegisterText } >Novo Aqui? Cadastre-se</Text>
+          <Text onPress={() => navigate('Register', { navigation: this.state.navigation})} style={ styles.RegisterText } >Novo Aqui? Cadastre-se</Text>
         </Content>
       </Container>
     );

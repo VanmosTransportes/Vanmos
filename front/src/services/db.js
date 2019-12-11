@@ -21,7 +21,7 @@ const route = [
   },
   {
     latitude: -25.584693,
-    longitude: -49.9995899,
+    longitude: -49.4995899,
     description: 'Konoha, 3º Esquina',
     title: 'Ino Yamanaka',
     text: 'Ino Yamanaka',

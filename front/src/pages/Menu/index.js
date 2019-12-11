@@ -44,12 +44,12 @@ export default function Menu( props ){
         <Icon name="keyboard-arrow-right" size={20} color="#000" />
       </ListItem>
 
-      <ListItem onPress={() => navigate('Help', {utype: props.utype})}>
+      <ListItem onPress={() => navigate('ListDriver', { navigation: props.navigation })}>
         <ListText>Listar Motoristas</ListText>
         <Icon name="keyboard-arrow-right" size={20} color="#000" />
       </ListItem>
 
-      <ListItem onPress={() => navigate('Help', {utype: props.utype})}>
+      <ListItem onPress={() => navigate('ListVeicule', { navigation: props.navigation })}>
         <ListText>Listar Veiculos</ListText>
         <Icon name="keyboard-arrow-right" size={20} color="#000" />
       </ListItem>
