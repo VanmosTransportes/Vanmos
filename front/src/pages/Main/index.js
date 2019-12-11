@@ -6,8 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Header from '~/components/Header'
 import Tabs from '~/components/Tabs'
-// import Map from '~/components/Map/Map';
-import Map from '~/components/Map/Passenger';
+import Driver from '~/components/Map/Map';
+import Passenger from '~/components/Map/Passenger';
 
 
 import {
@@ -19,7 +19,9 @@ import {
 from './styles';
 
 export default function Main(props){
-  const {navigate} = props.navigation;
+  const { navigate } = props.navigation;
+  const utype = JSON.stringify(props.navigation.getParam('type'))
+  
   
   let offset = 0
   const translateY = new Animated.Value(0)
@@ -63,11 +65,10 @@ export default function Main(props){
 
   return(
     <Container>
-      <Icon name='keyboard-arrow-left' size={25} onPress={() => navigate('Login')} />
-      <Header />
+      <Header navigation={props.navigation} />
 
       <Content>
-        <Tabs translateY={translateY} />
+        <Tabs translateY={translateY} navigation={props.navigation} utype={utype} />
         <PanGestureHandler
           onGestureEvent={animatedEvent}
           onHandlerStateChange={onHandlerStateChange}
@@ -82,7 +83,16 @@ export default function Main(props){
             }]
           }}>
             <CardContent>
-              <Map />
+              {
+              utype.includes('passenger')
+              &&
+              <Passenger />
+              }
+              {
+              utype.includes('driver')
+              &&
+              <Driver />
+              }
             </CardContent>
           </Card>
         </PanGestureHandler>

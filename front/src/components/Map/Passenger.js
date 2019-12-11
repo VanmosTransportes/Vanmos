@@ -90,7 +90,7 @@ class Example extends Component {
           followsUserLocation={true}
           rotateEnabled={false}
           onUserLocationChange={e => {
-            this._onUserLocationChange(e.nativeEvent.coordinate)
+            // this._onUserLocationChange(e.nativeEvent.coordinate)
           }}
           showsCompass={true}
           showsMyLocationButton={true}

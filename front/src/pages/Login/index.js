@@ -1,29 +1,41 @@
 import React, { Component } from "react";
 import {
   Container,
-  Header,
-  Title,
   Content,
   Button,
   Item,
   Label,
   Input,
-  Body,
-  Left,
-  Right,
   Icon,
   Form,
-  Text, 
-  Picker
+  Text,
 } from "native-base";
 
 import styles from './styles'
 
 
 export default class Login extends Component {
+  
+  state = { 
+    email: "",
+    navigation: this.props.navigation 
+  }
+
+  enter(){
+    const {navigate} = this.state.navigation;
+    
+    if(this.state.email.includes('Motorista')){
+      navigate('Main', { type: 'driver' })
+    }
+    else if(this.state.email.includes('Passageiro')){
+      navigate('Main', { type: 'passenger' })
+    }
+    else{
+      navigate('Main', { type: 'owner' })
+    }
+  }
 
   render() {
-    const {navigate} = this.props.navigation;
     return (
       <Container style={ styles.Container }>
         <Content style={ styles.Content }>
@@ -31,7 +43,7 @@ export default class Login extends Component {
             <Item floatingLabel style={ styles.ItemInput }>
               <Icon active name="mail" /> 
               <Label style={styles.LabelInput}>E-mail</Label>
-              <Input />
+              <Input onChange={(e) => this.state.email = e.nativeEvent.text} />
             </Item>
             
             <Item floatingLabel style={ styles.ItemInput }>
@@ -40,7 +52,7 @@ export default class Login extends Component {
               <Input secureTextEntry />
             </Item> 
           </Form>
-          <Button block onPress={() => navigate('Main')} style={ styles.Login }>
+          <Button block onPress={() => this.enter()} style={ styles.Login }>
             <Text>Entrar</Text>
           </Button>
           <Text onPress={() => navigate('Register')} style={ styles.RegisterText } >Novo Aqui? Cadastre-se</Text>

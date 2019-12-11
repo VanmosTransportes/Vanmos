@@ -15,8 +15,8 @@ export const ListItem = styled(Animated.View)`
 `;
 
 export const ListIcon = styled.Image`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 40px;
   margin-right: 15px;
 `;
