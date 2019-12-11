@@ -22,7 +22,7 @@ export default function Tabs(props){
           <TabItem>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
               <Icon name="list" size={25} color="#000" />
-              <TabText>Rota - Mirum</TabText>
+              <TabText>Rota - Konoha</TabText>
             </View>
             <List list={route.slice(1)} icon={true} />
           </TabItem>

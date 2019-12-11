@@ -1,68 +1,56 @@
 import React, { Component } from "react";
-import { 
-    Content,
-    Icon,
-    Accordion,
-    Text
+import {
+  Container,
+  Content,
+  Button,
+  List,
+  ListItem,
+  Body,
+  Text,
+  Right,
 } from "native-base";
 
-import { 
-    Container,
-    Title,
-    ListText,
-    ListItem,
-    ListSubItem,
-    ListSubText,
-    SignOutButton,
-    SignOutButtonText
-} from './styles'
+import styles from './styles'
 
-const dataArray = [
-  { title: "Companhia: My Company", content: "Origem: Agência Mirum /  Destino: Unifacear" },
-  { title: "Companhia: Ultra Transportes", content: "Origem: Shopping Palladium /  Destino: UFPR" },
-  { title: "Companhia: TransYukio", content: "Origem: Terminal Pinheirinho /  Destino: IFPR" }
-];
 
-export default class VanList extends Component {
-    
-    _renderHeader(item, expanded) {
-    return (
-      <ListItem>
-        <ListText>{item.title}</ListText>
-        {expanded
-          ? <Icon style={{ fontSize: 18 }} name="remove-circle" />
-          : <Icon style={{ fontSize: 18 }} name="add-circle" />
-        }
-      </ListItem>
-    );
-  }
-  _renderContent(item) {
-    return (
-        <ListSubItem>
-            <ListSubText>
-                {item.content}
-            </ListSubText>
-        </ListSubItem>
-    );
-  }
+export default class Register extends Component {
+
   render() {
-    const {navigate} = this.props.navigation;
-    
+    const { navigate } = this.props.navigation.getParam('navigation')
     return (
-      <Container>
-        <Title>Vans</Title>
-          <Accordion
-            dataArray={dataArray}
-            animation={true}
-            expanded={true}
-            renderHeader={this._renderHeader}
-            renderContent={this._renderContent}
-          />
-        <SignOutButton onPress={() => navigate('Main', {type: 'passenger'}) }>
-            <SignOutButtonText>Voltar</SignOutButtonText>
-        </SignOutButton>
+      <Container style={ styles.Container }>
+        <Content style={ styles.Content }>
+          <List>
+            <ListItem avatar onPress={() => navigate('VanInfo', { navigation: this.props.navigation })}>
+              <Body style={ styles.ListItem }>
+                <Text>Wolksvagem</Text>
+                <Text note>Origem: Avenida Duque de Caxias</Text>
+                <Text note>Destino: Facear</Text>
+              </Body>
+              <Right style={ styles.ListItem }>
+                <Text>AFK-2158</Text>
+              </Right>
+            </ListItem>
+          </List>
+          
+          <List>
+            <ListItem avatar onPress={() => navigate('VanInfo', { navigation: this.props.navigation })} >
+              <Body style={ styles.ListItem }>
+                <Text>Wolksvagem</Text>
+                <Text note>Origem: Konoha</Text>
+                <Text note>Destino: Vila da Areia</Text>
+              </Body>
+              <Right style={ styles.ListItem }>
+                <Text>FGT-2314</Text>
+              </Right>
+            </ListItem>
+          </List>
+
+          <Button block onPress={() => navigate('Main', {type: 'passenger'})} style={ styles.BackButton }>
+            <Text>Voltar</Text>
+          </Button>
+        </Content>
       </Container>
     );
   }
 }
-<br/>

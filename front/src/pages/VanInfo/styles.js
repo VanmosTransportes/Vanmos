@@ -8,14 +8,19 @@ const styles = StyleSheet.create({
   },
   Content: {
     width: 350,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
-  ListItem: {
-    borderColor: 'white'
+  Text: {
+    textAlign: 'justify',
   },
   BackButton: {
     marginTop: 20, 
     backgroundColor: 'grey', 
+    borderRadius: 25
+  },
+  Button: {
+    marginTop: 20, 
+    backgroundColor: 'green', 
     borderRadius: 25
   },
 })

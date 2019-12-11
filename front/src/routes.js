@@ -11,6 +11,7 @@ import CreateDriver from '~/pages/CreateDriver';
 import CreateVeicule from '~/pages/CreateVeicule';
 import ListVeicule from '~/pages/ListVeicule';
 import ListDriver from '~/pages/ListDriver';
+import VanInfo from '~/pages/VanInfo';
 
 const Routes = createAppContainer(
   createSwitchNavigator({ 
@@ -24,8 +25,9 @@ const Routes = createAppContainer(
     CreateDriver,
     CreateVeicule,
     ListVeicule,
-    ListDriver
+    ListDriver,
+    VanInfo
   })
-);
+); 
 
 export default Routes;
