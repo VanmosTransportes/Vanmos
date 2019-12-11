@@ -29,7 +29,7 @@ export default function Tabs(props){
         }
         
         {
-        utype.includes('passenger')
+        !utype.includes('driver')
           &&
         <TabItem>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
@@ -40,17 +40,21 @@ export default function Tabs(props){
         </TabItem>
         }
 
-        <TabItem>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
-            <Icon name="list" size={25} color="#000" />
-            <TabText>Rotas</TabText>
-          </View>
-          <List list={routeList} />
-        </TabItem>
+        {
+          utype.includes('driver')
+          &&
+          <TabItem>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+              <Icon name="list" size={25} color="#000" />
+              <TabText>Rotas</TabText>
+            </View>
+            <List list={routeList} />
+          </TabItem>
+        }
         
         <TabItem>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
-            <Icon name="list" size={25} color="#000" />
+            <Icon name="person" size={25} color="#000" />
             <TabText>Meu Perfil</TabText>
           </View>
           <Profile navigation={props.navigation} utype={utype} />

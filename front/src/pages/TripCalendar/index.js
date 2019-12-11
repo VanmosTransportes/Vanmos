@@ -34,7 +34,7 @@ export default class App extends Component {
             'Novembro',
             'Dezembro',
           ]}
-          previousTitle="Anterios"
+          previousTitle="Anterior"
           nextTitle="Próximo"
           todayBackgroundColor="#e6ffe6"
           selectedDayColor="red"

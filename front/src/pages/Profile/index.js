@@ -9,24 +9,27 @@ import {
   SignOutButtonText
 } from './styles'
 
+import { motorista, dono, passageiro } from '../../services/db'
 export default class Profile extends Component {
   
   render(){
     const { navigate } = this.props.navigation
+    const utype = this.props.utype
+    const infos = utype.includes('driver') ? motorista : ( utype.includes('passenger') ? passageiro : dono)
     return(
       <Container>
         <Nav>
           <NavItem>
-            <NavText>Matheus Dalenga</NavText>
+            <NavText>{infos.name}</NavText>
           </NavItem>
           <NavItem>
-            <NavText>(41) 9 8772-2774</NavText>
+            <NavText>{infos.code}</NavText>
           </NavItem>
           <NavItem>
-            <NavText>dalenga@gmail.com</NavText>
+            <NavText>{infos.email}</NavText>
           </NavItem>
           <NavItem>
-            <NavText>120.234.548-73</NavText>
+            <NavText>{infos.phone}</NavText>
           </NavItem>
         </Nav>
 

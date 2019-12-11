@@ -111,14 +111,14 @@ class Example extends Component {
           followsUserLocation={true}
           rotateEnabled={false}
           onUserLocationChange={e => {
-            // this._onUserLocationChange(e.nativeEvent.coordinate)
+            this._onUserLocationChange(e.nativeEvent.coordinate)
           }}
           showsCompass={true}
           showsMyLocationButton={true}
         >
           {(this.state.coordinates.length >= 2 && this.state.load === 1) && (
             <>
-              {/* <MapViewDirections
+              <MapViewDirections
                 origin={this.state.coordinates[0]}
                 waypoints={ (this.state.coordinates.length > 2) ? this.state.coordinates.slice(1, -1): null}
                 destination={this.state.coordinates[this.state.coordinates.length-1]}
@@ -144,7 +144,7 @@ class Example extends Component {
                 onError={(errorMessage) => {
                   console.log(errorMessage);
                 }}
-              /> */}
+              />
 
               {this.state.coordinates.slice(1).map((coordinate, index) =>
                 <React.Fragment key={`marker-${index}`}>

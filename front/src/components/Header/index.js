@@ -2,13 +2,17 @@ import React from 'react'
 import { Container, Top, Photo, Title } from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { motorista, dono, passageiro } from '../../services/db'
+
 export default function Header(props){
   const { navigate } = props.navigation;
+  const utype = props.utype;
+  const infos = utype.includes('driver') ? motorista : ( utype.includes('passenger') ? passageiro : dono)
   return(
     <Container>
       <Top>
-        <Photo source={props.photo}/>
-        <Title onPress={() => navigate('Profile')}>{props.name}</Title>
+        <Photo source={infos.photo}/>
+        <Title>{infos.name}</Title>
       </Top>
       <Icon name='keyboard-arrow-down' size={25}/>
     </Container>

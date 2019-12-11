@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Animated } from 'react-native'
 import { PanGestureHandler, State } from'react-native-gesture-handler'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Header from '~/components/Header'
 import Tabs from '~/components/Tabs'
@@ -14,7 +13,7 @@ import {
   Container,
   Content,
   Card,
-  CardContent,
+  CardContent
   }
 from './styles';
 
@@ -65,37 +64,42 @@ export default function Main(props){
 
   return(
     <Container>
-      <Header navigation={props.navigation} />
+      <Header navigation={props.navigation} utype={utype} />
 
       <Content>
         <Tabs translateY={translateY} navigation={props.navigation} utype={utype} />
-        <PanGestureHandler
-          onGestureEvent={animatedEvent}
-          onHandlerStateChange={onHandlerStateChange}
-        >
-          <Card style={{
-            transform: [{
-              translateY: translateY.interpolate({
-                inputRange: [-350, 0, 350],
-                outputRange: [-50, 0, 350],
-                extrapolate: 'clamp',
-              }),
-            }]
-          }}>
-            <CardContent>
-              {
-              utype.includes('passenger')
-              &&
-              <Passenger />
-              }
-              {
-              utype.includes('driver')
-              &&
-              <Driver />
-              }
-            </CardContent>
-          </Card>
-        </PanGestureHandler>
+        
+        {
+          !utype.includes('owner')
+          &&
+          <PanGestureHandler
+            onGestureEvent={animatedEvent}
+            onHandlerStateChange={onHandlerStateChange}
+          >
+            <Card style={{
+              transform: [{
+                translateY: translateY.interpolate({
+                  inputRange: [-350, 0, 350],
+                  outputRange: [-50, 0, 350],
+                  extrapolate: 'clamp',
+                }),
+              }]
+            }}>
+              <CardContent>
+                {
+                utype.includes('passenger')
+                &&
+                <Passenger />
+                }
+                {
+                utype.includes('driver')
+                &&
+                <Driver />
+                }
+              </CardContent>
+            </Card>
+          </PanGestureHandler>
+        }
 
       </Content>      
     </Container>

@@ -7,6 +7,8 @@ import Profile from '~/pages/Profile';
 import TripCalendar from '~/pages/TripCalendar';
 import Help from '~/pages/Help';
 import VanList from '~/pages/VanList';
+import CreateDriver from '~/pages/CreateDriver';
+import CreateVeicule from '~/pages/CreateVeicule';
 
 const Routes = createAppContainer(
   createSwitchNavigator({ 
@@ -16,7 +18,9 @@ const Routes = createAppContainer(
     Profile,
     TripCalendar,
     Help,
-    VanList
+    VanList,
+    CreateDriver,
+    CreateVeicule
   })
 );
 

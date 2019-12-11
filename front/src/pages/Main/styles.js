@@ -17,7 +17,7 @@ export const Card = styled(Animated.View)`
   flex: 1;
   background: #FFF;
   border-radius: 4px;
-  height: 100%;
+  height: 120%;
   position: absolute;
   left: 8;
   right: 0;
